@@ -5,6 +5,8 @@ It's toolfrog.
 
 Retrieve and display unspent dogecoin transaction using the blockcypher.io API.
 
-npm i
-npm run start
-Program should load within a browser at localhost:3000
+* npm i
+
+* npm run start
+
+* Program should load within a browser at localhost:3000

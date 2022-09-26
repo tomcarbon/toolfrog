@@ -18,21 +18,36 @@ class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      value: ''
+      address: ''
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getUTxs = this.getUTxs.bind(this);
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({address: event.target.value});
   }
 
-  handleSubmit = async (event) => {
+  /*
+   get Unspent Transactions -- getUTxs()
+  */
+  getUTxs = async (event) => {
     event.preventDefault();
-    result = await get_the_transactions(this.state.value);
-    console.log(result);
-    this.forceUpdate();
+    // validation: the input address must be 34 bytes:
+    if (this.state.address.length != 34) {
+      alert("Not 34 chars in length.")
+    }
+    else {
+      // validation: the input address must begin with D, A, or 9:
+      if (this.state.address.slice(0,1) !== 'D' && this.state.address.slice(0,1) !== 'A' && this.state.address.slice(0,1) !== '9')
+      {
+          alert("Dogecoin Address must start with 'A', '9', or 'D'");
+      } else {
+        result = await get_the_transactions(this.state.address);
+        console.log(result);
+        this.forceUpdate();
+      }
+    }
   }
 
   render () {
@@ -41,10 +56,10 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <p>ToolFrog</p>
           <hr />
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.getUTxs}>
             <label>
               Retrieve Unspent transactions from a Dogecoin Address:
-              <input type="text" value={this.state.value} onChange={this.handleChange} style={{width: "300px"}} />
+              <input type="text" value={this.state.address} onChange={this.handleChange} style={{width: "300px"}} />
             </label>
             <input type="submit" value="do it" />
           </form>

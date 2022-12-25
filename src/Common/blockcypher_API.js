@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export default async function get_the_transactions(address) {
-        console.info("top of get_the_transactions(" + address + ") in blockcypher(update).");
+export default async function get_the_Blockcypher_transactions(address) {
+        console.info("top of get_the_Blockcypher_transactions(" + address + ") in blockcypher(update).");
         try {
 
                 let work_txs = [];
@@ -38,7 +38,7 @@ export default async function get_the_transactions(address) {
                 }
 
                 if (data.hasMore === true) {             // we can do more work here, put out warning for now.
-                        alert("data.hasMore = true in get_the_transactions_blockcypher_update! This is a sandy account. Cumulative total = " + cum_total);
+                        alert("data.hasMore = true in get_the_Blockcypher_transactions_blockcypher_update! This is a sandy account. Cumulative total = " + cum_total);
                 }
 
                 console.info("Cumulative Totals from transactions: "  + cum_total);

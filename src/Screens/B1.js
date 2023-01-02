@@ -47,6 +47,7 @@ class B1 extends React.Component {
     clearTransactions() {
         result = config.result_init;
         this.setState({SaveButtonDisabled: true})
+        this.setState({address: ''})
         this.forceUpdate();
     }
 

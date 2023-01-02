@@ -1,14 +1,19 @@
-import { save } from 'save-file';
+import { save } from 'save-file'
 
-async function saveFile(a,b) {
+async function saveFile(a,b) {  // The save button on B1.js, e.g
     try {
-        const msg = "Press OK to create new local file: " + b;
+        const msg = "Press OK to create new local file: " + b
         if (window.confirm(msg)) {
-            await save(a,b);
+            await save(a,b)
         }
     } catch (err) {
-        alert(err);
+        console.error("Error in function saveFile().")
+        alert(err)
     }
 }
 
-export default saveFile;
+const commonUtils = {
+    saveFile
+}
+
+export default commonUtils

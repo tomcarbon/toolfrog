@@ -34,6 +34,9 @@ class MenuBar extends React.Component {
                      <HoverButton className="official-menu-buttonstyle" onClick={() => generica('B1')}>
                         Transactions
                      </HoverButton>
+                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('E1')}>
+                        Withdraw
+                     </HoverButton>
                      <HoverButton className="official-menu-buttonstyle" onClick={() => generica('C1')}>
                        About
                      </HoverButton>

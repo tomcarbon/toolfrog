@@ -1,6 +1,7 @@
 /* TRANSACTIONS - B1 */
 import React from 'react';
 import APIDropdown from '../Components/APIDropdown';
+import saveFile from '../Common/commonUtils';
 import get_the_Blockcypher_transactions from '../Common/blockcypher_API';
 import styled from "styled-components";
 import Container from 'react-bootstrap/Container';
@@ -27,7 +28,8 @@ class B1 extends React.Component {
         super(props);
         this.state = {
             checked: false,
-            address: ''
+            address: '',
+            SaveButtonDisabled: true
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
@@ -40,6 +42,21 @@ class B1 extends React.Component {
 
     handleTogChange(checked) {
         this.setState({ checked });
+    }
+
+    clearTransactions() {
+        result = config.result_init;
+        this.setState({SaveButtonDisabled: true})
+        this.forceUpdate();
+    }
+
+    saveTransactions(a) {
+        if (result[0].txid !== 'none') {
+            const fname = this.state.address.trim() + "_transactions.json";
+            saveFile(JSON.stringify(result),fname);
+        } else {
+            alert("There is nothing to save!");
+        }
     }
 
     // getUTxs(): Get Unspent Transactions 
@@ -59,9 +76,11 @@ class B1 extends React.Component {
                 console.log(result);
                 if (result === config.No_Unspent_Transactions) {
                     result = config.result_init;
+                    this.setState({SaveButtonDisabled: true})
                     this.forceUpdate();
                     alert(config.No_Unspent_Transactions);
                 } else {
+                    this.setState({SaveButtonDisabled: false})
                     this.forceUpdate();
                 }
             }
@@ -83,8 +102,9 @@ class B1 extends React.Component {
                     </label>
                     <input className="official-general-buttonstyle" style={{margin:"1%"}} type="submit" value="Retrieve" />
                 </form>
-                <HoverButton className='official-general-buttonstyle' disabled={true} onClick={() => this.props.generica(config.Save_Button_Pressed)}>Save</HoverButton>
+                <HoverButton className='official-general-buttonstyle' disabled={this.state.SaveButtonDisabled} onClick={() => this.saveTransactions()}>Save</HoverButton>
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.props.generica(config.Load_Button_Pressed)}>Load</HoverButton>
+                <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.clearTransactions()}>Clear</HoverButton>
                 <br />
                 <table className='basic-container rounded'>
                     <thead>

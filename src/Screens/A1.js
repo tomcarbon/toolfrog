@@ -15,7 +15,11 @@ class A1 extends React.Component {
                 <h1>HOME</h1>
                 <br />
                 <p>Watch this site for added decentralized dogecoin functionality!</p>
-                <p>Currently this website only allows unspent transactions for a dogecoin address to be queried and displayed.</p>
+                <h5>Current Functionality:</h5>
+                <ul>
+                    <li>Retrieve Unspent Transactions</li>
+                    <li>Save Transactions to local text file (JSON)</li>
+                </ul>
             </Container>
         );
     }

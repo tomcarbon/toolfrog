@@ -10,6 +10,7 @@ import MenuBar from "./Components/MenuBar";
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import config from './Config/config';
+
 //import Row from "react-bootstrap/Row";
 //import Col from "react-bootstrap/Col";
 
@@ -19,7 +20,7 @@ class App extends React.Component {
     this.state = {
       checked: false,
       address: '',
-      destination_page: 'A1'
+      destination_page: 'B1'
     };
   }
 
@@ -29,10 +30,6 @@ class App extends React.Component {
     if (a.length === 2 && a.substring(1,2) === '1') {   // A1, B1, C1, etc
       this.setState({destination_page:a});
     } 
-    else if (a === config.Save_Button_Pressed) {        // SAVE BUTTON from B2.js
-      // function for performing the save transaction logic goes here
-      alert(config.Save_Button_Pressed);
-    }
     else if (a === config.Load_Button_Pressed) {        // LOAD BUTTON from B2.js
       // function for performing the load transaction logic goes here
       alert(config.Load_Button_Pressed);
@@ -47,7 +44,6 @@ class App extends React.Component {
     return (
       <Container className="App basic rounded">
           <Header></Header>
-          <br />
           <MenuBar generica={generica.bind(this)}></MenuBar>
           <br />
           <Nav generica={generica.bind(this)} destination_page={this.state.destination_page}></Nav>

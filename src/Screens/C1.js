@@ -10,6 +10,9 @@ class C1 extends React.Component {
         return (
             <Container>
                 <h1>ABOUT</h1>
+                <hr />
+                <h3 style={{color: "red"}}>#DECENTRALIZATION</h3>
+                <hr />
                 <p>This site is planned to be a nodeJS refactoring of dogecoinmultisig.org</p>
                 <p>This is open source code which is available at: <a href="https://github.com/tomcarbon/toolfrog">github location</a></p>
             </Container>

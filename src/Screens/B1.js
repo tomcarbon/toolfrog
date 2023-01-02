@@ -2,10 +2,21 @@
 import React from 'react';
 import APIDropdown from '../Components/APIDropdown';
 import get_the_Blockcypher_transactions from '../Common/blockcypher_API';
+import styled from "styled-components";
 import Container from 'react-bootstrap/Container';
 import config from "../Config/config_standard";
+import '../App.css';
 //import Row from "react-bootstrap/Row";
 //import Col from "react-bootstrap/Col";
+
+const HoverButton = styled.button`
+    :hover {
+        background-color: lightgreen;
+        cursor: pointer;
+        position: relative;
+        top: 1px;
+        left: 1px;
+    }`;
 
 let result = config.result;
 
@@ -58,10 +69,11 @@ class B1 extends React.Component {
 
     render () {
         return (
-            <Container>
-                <h1>Pull Transactions</h1>
+            <Container className="official-standard-formatting">
+                <h1>Transactions Manager</h1>
+                <br />
+                <h2>Pull Transactions</h2>
                 <p> Retrieve Unspent Transactions for a specified dogecoin address.</p>
-                <hr />
 
                 <APIDropdown />
                 <form onSubmit={this.getUTxs}>
@@ -71,7 +83,6 @@ class B1 extends React.Component {
                     </label>
                     <input type="submit" value="do it" />
                 </form>
-                <hr />
                 <table className='basic-container rounded'>
                     <thead>
                     <tr>
@@ -96,6 +107,8 @@ class B1 extends React.Component {
                     }
                     </tbody>
                 </table>
+                <HoverButton className='official-menu-buttonstyle' disabled={false} onClick={() => this.props.handleToUpdate('Save Button pressed TBD')}>Save</HoverButton>
+                <HoverButton className='official-menu-buttonstyle' disabled={false} onClick={() => this.props.handleToUpdate('Load Button pressed TBD')}>Load</HoverButton>
             </Container>
         );
     }

@@ -27,17 +27,20 @@ class MenuBar extends React.Component {
         var handleToUpdate = this.props.handleToUpdate;
          return (
              <Container>
-                <hr />
+                <br />
                      <HoverButton className="official-menu-buttonstyle" onClick={() => handleToUpdate('A1')}>
                         Home
                      </HoverButton>
                      <HoverButton className="official-menu-buttonstyle" onClick={() => handleToUpdate('B1')}>
-                        Pull Transactions 
+                        Transactions
                      </HoverButton>
                      <HoverButton className="official-menu-buttonstyle" onClick={() => handleToUpdate('C1')}>
                        About
                      </HoverButton>
-                <hr />
+                     <HoverButton className="official-menu-buttonstyle" onClick={() => handleToUpdate('D1')}>
+                        DBS 
+                     </HoverButton>
+                <br />
              </Container>
          );
     }

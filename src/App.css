@@ -44,9 +44,17 @@ table, th, td {
 .headerstyle {
   background-color: beige;
 }
+
+.official-standard-formatting {
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+
 .official-menu-buttonstyle {
   background-color: beige;
   border-radius: 5px;
   margin-right: 5%;
-  width: 20%;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  width: 220px;
 }

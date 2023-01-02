@@ -23,7 +23,12 @@ class App extends React.Component {
   }
 
   handleToUpdate(a) {
-    this.setState({dest:a});
+    // From Nav.js -- Navigation from the MenuBar:
+    if (a.length === 2 && a.substring(1,2) === '1') {   // A1, B1, C1, etc
+      this.setState({dest:a});
+    } else {
+      alert(a);   
+    }
   }
 
   render () {
@@ -31,10 +36,10 @@ class App extends React.Component {
     return (
       <Container className="App basic rounded">
           <Header></Header>
-          <hr />
+          <br />
           <MenuBar handleToUpdate={handleToUpdate.bind(this)}></MenuBar>
-          <hr />
-          <Nav dest={this.state.dest}></Nav>
+          <br />
+          <Nav handleToUpdate={handleToUpdate.bind(this)} dest={this.state.dest}></Nav>
         </Container>
       );
   }

@@ -1,13 +1,15 @@
-/* PULL TRANSACTIONS - B1 */
+/* TRANSACTIONS - B1 */
 import React from 'react';
 import APIDropdown from '../Components/APIDropdown';
 import get_the_Blockcypher_transactions from '../Common/blockcypher_API';
 import styled from "styled-components";
 import Container from 'react-bootstrap/Container';
-import config from "../Config/config_standard";
+import config from "../Config/config";
 import '../App.css';
 //import Row from "react-bootstrap/Row";
 //import Col from "react-bootstrap/Col";
+
+let result = config.result_init;
 
 const HoverButton = styled.button`
     :hover {
@@ -18,7 +20,6 @@ const HoverButton = styled.button`
         left: 1px;
     }`;
 
-let result = config.result;
 
 class B1 extends React.Component {
 
@@ -57,7 +58,7 @@ class B1 extends React.Component {
                 result = await get_the_Blockcypher_transactions(working_address);
                 console.log(result);
                 if (result === config.No_Unspent_Transactions) {
-                    result = config.result;     // set back to 'none' for all fields
+                    result = config.result_init;
                     this.forceUpdate();
                     alert(config.No_Unspent_Transactions);
                 } else {
@@ -69,20 +70,22 @@ class B1 extends React.Component {
 
     render () {
         return (
-            <Container className="official-standard-formatting">
+            <Container>
                 <h1>Transactions Manager</h1>
                 <br />
                 <h2>Pull Transactions</h2>
-                <p> Retrieve Unspent Transactions for a specified dogecoin address.</p>
 
                 <APIDropdown />
+                <br />
                 <form onSubmit={this.getUTxs}>
                     <label>
-                    Retrieve Unspent transactions from a Dogecoin Address:
-                    <input type="text" value={this.state.address} onChange={this.handleChange} style={{width: "300px"}} />
+                        Retrieve Unspent transactions from a Dogecoin Address: <input type="text" value={this.state.address} onChange={this.handleChange} style={{width: "300px"}} />
                     </label>
-                    <input type="submit" value="do it" />
+                    <input className="official-general-buttonstyle" style={{margin:"1%"}} type="submit" value="Retrieve" />
                 </form>
+                <HoverButton className='official-general-buttonstyle' disabled={true} onClick={() => this.props.generica(config.Save_Button_Pressed)}>Save</HoverButton>
+                <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.props.generica(config.Load_Button_Pressed)}>Load</HoverButton>
+                <br />
                 <table className='basic-container rounded'>
                     <thead>
                     <tr>
@@ -107,8 +110,6 @@ class B1 extends React.Component {
                     }
                     </tbody>
                 </table>
-                <HoverButton className='official-menu-buttonstyle' disabled={false} onClick={() => this.props.handleToUpdate('Save Button pressed TBD')}>Save</HoverButton>
-                <HoverButton className='official-menu-buttonstyle' disabled={false} onClick={() => this.props.handleToUpdate('Load Button pressed TBD')}>Load</HoverButton>
             </Container>
         );
     }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from "../Config/config_standard";
+import config from "../Config/config";
 
 export default async function get_the_Blockcypher_transactions(address) {
         console.info("top of get_the_Blockcypher_transactions(" + address + ") in blockcypher(update).");

@@ -45,11 +45,6 @@ table, th, td {
   background-color: beige;
 }
 
-.official-standard-formatting {
-    margin-bottom: 1%;
-    margin-top: 1%;
-}
-
 .official-menu-buttonstyle {
   background-color: beige;
   border-radius: 5px;
@@ -57,4 +52,13 @@ table, th, td {
   margin-bottom: 1%;
   margin-top: 1%;
   width: 220px;
+}
+
+.official-general-buttonstyle {
+  background-color: light blue;
+  border-radius: 10px;
+  margin-right: 1%;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  width: 200px;
 }

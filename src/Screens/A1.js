@@ -11,7 +11,7 @@ class A1 extends React.Component {
 
     render () {
         return (
-            <Container className="official-standard-formatting">
+            <Container>
                 <h1>HOME</h1>
                 <br />
                 <p>Watch this site for added decentralized dogecoin functionality!</p>

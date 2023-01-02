@@ -24,20 +24,20 @@ class MenuBar extends React.Component {
     }
 
     render () {
-        var handleToUpdate = this.props.handleToUpdate;
+        var generica = this.props.generica;
          return (
              <Container>
                 <br />
-                     <HoverButton className="official-menu-buttonstyle" onClick={() => handleToUpdate('A1')}>
+                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('A1')}>
                         Home
                      </HoverButton>
-                     <HoverButton className="official-menu-buttonstyle" onClick={() => handleToUpdate('B1')}>
+                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('B1')}>
                         Transactions
                      </HoverButton>
-                     <HoverButton className="official-menu-buttonstyle" onClick={() => handleToUpdate('C1')}>
+                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('C1')}>
                        About
                      </HoverButton>
-                     <HoverButton className="official-menu-buttonstyle" onClick={() => handleToUpdate('D1')}>
+                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('D1')}>
                         DBS 
                      </HoverButton>
                 <br />

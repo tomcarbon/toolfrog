@@ -18,8 +18,9 @@ class Header extends React.Component {
     render () {
          return (
             <Container className="headerstyle">
-                <img src={logo} className="App-logo " alt="logo" />
-                 <h1 style={{color: "white"}}>ToolFrog</h1>
+                <img src={logo} className="App-logo " style={{marginLeft: "3%"}} alt="logo" />
+                 <h1 style={{color: "white", marginLeft: "5%", position: "relative", zIndex: "1"}}>ToolFrog</h1>
+                 <br />
              </Container>
          );
     }

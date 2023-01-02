@@ -43,6 +43,8 @@ table, th, td {
 
 .headerstyle {
   background-color: beige;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .official-menu-buttonstyle {

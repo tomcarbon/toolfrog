@@ -1,7 +1,7 @@
 /* TRANSACTIONS - B1 */
 import React from 'react';
 import APIDropdown from '../Components/APIDropdown';
-import saveFile from '../Common/commonUtils';
+import commonUtils  from '../Common/commonUtils';
 import get_the_Blockcypher_transactions from '../Common/blockcypher_API';
 import styled from "styled-components";
 import Container from 'react-bootstrap/Container';
@@ -54,7 +54,7 @@ class B1 extends React.Component {
     saveTransactions(a) {
         if (result[0].txid !== 'none') {
             const fname = this.state.address.trim() + "_transactions.json";
-            saveFile(JSON.stringify(result),fname);
+            commonUtils.saveFile(JSON.stringify(result),fname);
         } else {
             alert("There is nothing to save!");
         }

@@ -29,7 +29,8 @@ class B1 extends React.Component {
         this.state = {
             checked: false,
             address: '',
-            SaveButtonDisabled: true
+            SaveButtonDisabled: true,
+            transactionCount: 69
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
@@ -48,7 +49,36 @@ class B1 extends React.Component {
         result = config.result_init;
         this.setState({SaveButtonDisabled: true})
         this.setState({address: ''})
+        this.setState({transactionCount: 0});
         this.forceUpdate();
+    }
+
+    async loadTransactionsFromFile(a) {
+        try {
+            let input = document.createElement('input');
+            input.type = 'file';
+            input.onchange = e => {
+                let file = e.target.files[0];
+                let reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+                reader.onload = readerEvent => {
+                    result = JSON.parse(readerEvent.target.result)
+                    if (result && result.length > 0) {
+                        this.setState({SaveButtonDisabled: false})
+                        this.setState({address: file.name.slice(0,34)});
+                        this.setState({transactionCount: result.length});
+                        this.forceUpdate();
+                    } else {
+                        this.clearTransactions();
+                        alert("Empty Transaction dataset.")
+                    }
+                }
+            }
+            input.click();
+        } catch (err) {
+            alert(err);
+        }
+
     }
 
     saveTransactions(a) {
@@ -76,12 +106,11 @@ class B1 extends React.Component {
                 result = await get_the_Blockcypher_transactions(working_address);
                 console.log(result);
                 if (result === config.No_Unspent_Transactions) {
-                    result = config.result_init;
-                    this.setState({SaveButtonDisabled: true})
-                    this.forceUpdate();
+                    this.clearTransactions();
                     alert(config.No_Unspent_Transactions);
                 } else {
                     this.setState({SaveButtonDisabled: false})
+                    this.setState({transactionCount: result.length});
                     this.forceUpdate();
                 }
             }
@@ -99,13 +128,17 @@ class B1 extends React.Component {
                 <br />
                 <form onSubmit={this.getUTxs}>
                     <label>
-                        Retrieve Unspent transactions from a Dogecoin Address: <input type="text" value={this.state.address} onChange={this.handleChange} style={{width: "300px"}} />
+                        Retrieve Unspent transactions from a Dogecoin Address: <input type="text" value={this.state.address} onChange={this.handleChange} style={{width: "350px"}} />
                     </label>
-                    <input className="official-general-buttonstyle" style={{margin:"1%"}} type="submit" value="Retrieve" />
+                    <input disabled={!this.state.SaveButtonDisabled} className="official-general-buttonstyle" style={{margin:"1%"}} type="submit" value="Retrieve" />
                 </form>
+
                 <HoverButton className='official-general-buttonstyle' disabled={this.state.SaveButtonDisabled} onClick={() => this.saveTransactions()}>Save</HoverButton>
-                <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.props.generica(config.Load_Button_Pressed)}>Load</HoverButton>
+                <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.loadTransactionsFromFile()}>Load</HoverButton>
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.clearTransactions()}>Clear</HoverButton>
+
+                <div hidden={this.state.SaveButtonDisabled}>Address: <strong>{this.state.address.trim()}</strong></div>
+                <div hidden={this.state.SaveButtonDisabled}>Transaction Count: <strong>{this.state.transactionCount}</strong></div>
                 <br />
                 <table className='basic-container rounded'>
                     <thead>

@@ -18,7 +18,8 @@ class A1 extends React.Component {
                 <h5>Current Functionality:</h5>
                 <ul>
                     <li>Retrieve Unspent Transactions</li>
-                    <li>Save Transactions to local text file (JSON)</li>
+                    <li>Save Transactions to local file </li>
+                    <li>Load Transactions from local file </li>
                 </ul>
             </Container>
         );

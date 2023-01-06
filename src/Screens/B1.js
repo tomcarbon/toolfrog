@@ -1,6 +1,6 @@
 /* TRANSACTIONS - B1 */
 import React from 'react';
-import APIDropdown from '../Components/APIDropdown';
+import APISelector from '../Components/APISelector';
 import commonUtils  from '../Common/commonUtils';
 import get_the_Blockcypher_transactions from '../Common/blockcypher_API';
 import styled from "styled-components";
@@ -103,11 +103,24 @@ class B1 extends React.Component {
             if (working_address.slice(0,1) !== 'D' && working_address.slice(0,1) !== 'A' && working_address.slice(0,1) !== '9') {
                 alert("Dogecoin Address must start with an A, 9, or D.");
             } else {
-                result = await get_the_Blockcypher_transactions(working_address);
+                switch (this.props.selectedAPI) {
+                    case config.API_BlockCypher:
+                        result = await get_the_Blockcypher_transactions(working_address);
+                        break;
+                    case config.API_TBD:
+                        result = config.No_Work_To_Do;
+                        alert("Sorry, this is a placeholder for a new API implementation.")
+                        break;
+                    default: 
+                        alert(`Unexpected value of ${this.props.selectedAPI} for API in B1.js.`)
+                        break;
+                }
                 console.log(result);
-                if (result === config.No_Unspent_Transactions) {
+                if (result === config.No_Unspent_Transactions || result === config.No_Work_To_Do) {
+                    if (result === config.No_Unspent_Transactions) {
+                        alert(config.No_Unspent_Transactions);
+                    }
                     this.clearTransactions();
-                    alert(config.No_Unspent_Transactions);
                 } else {
                     this.setState({SaveButtonDisabled: false})
                     this.setState({transactionCount: result.length});
@@ -124,7 +137,7 @@ class B1 extends React.Component {
                 <br />
                 <h2>Pull Transactions</h2>
 
-                <APIDropdown />
+                <APISelector generica={this.props.generica} selectedAPI={this.props.selectedAPI} />
                 <br />
                 <form onSubmit={this.getUTxs}>
                     <label>

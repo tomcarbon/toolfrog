@@ -15,7 +15,7 @@ class Nav extends React.Component {
         if (this.props.destination_page === 'A1') {
             return(<A1/>);
         } else if (this.props.destination_page === 'B1') {
-            return(<B1 generica={this.props.generica}/>);
+            return(<B1 generica={this.props.generica} selectedAPI={this.props.selectedAPI} />);
         } else if (this.props.destination_page === 'C1') {
             return(<C1/>);
         } else if (this.props.destination_page === 'D1') {

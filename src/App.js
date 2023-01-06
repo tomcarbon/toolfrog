@@ -20,7 +20,8 @@ class App extends React.Component {
     this.state = {
       checked: false,
       address: '',
-      destination_page: 'B1'
+      destination_page: 'B1',
+      selectedAPI: config.API_BlockCypher
     };
   }
 
@@ -30,12 +31,15 @@ class App extends React.Component {
     if (a.length === 2 && a.substring(1,2) === '1') {   // A1, B1, C1, etc
       this.setState({destination_page:a});
     } 
-    else if (a === config.Load_Button_Pressed) {        // LOAD BUTTON from B2.js
+    else if (a === config.Load_Button_Pressed) {        // LOAD BUTTON from B1.js
       // function for performing the load transaction logic goes here
       alert(config.Load_Button_Pressed);
     }
+    else if (a === config.API_BlockCypher || a === config.API_TBD) {        // Selected API to use from B1->APISelector
+      this.setState({selectedAPI:a})
+    }
     else {             // otherwise, just display the message.
-      alert(a);   
+      console.log(a);
     }
   }
 
@@ -46,7 +50,7 @@ class App extends React.Component {
           <Header></Header>
           <MenuBar generica={generica.bind(this)}></MenuBar>
           <br />
-          <Nav generica={generica.bind(this)} destination_page={this.state.destination_page}></Nav>
+          <Nav generica={generica.bind(this)} destination_page={this.state.destination_page} selectedAPI={this.state.selectedAPI}></Nav>
         </Container>
       );
   }

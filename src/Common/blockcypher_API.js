@@ -40,7 +40,8 @@ export default async function get_the_Blockcypher_transactions(address) {
                         }
 
                         if (data.hasMore === true) {             // we can do more work here, put out warning for now.
-                                alert("data.hasMore = true in get_the_Blockcypher_transactions_blockcypher_update! This is a sandy account. Cumulative total = " + cum_total);
+//                                alert("data.hasMore = true in get_the_Blockcypher_transactions_blockcypher_update! This is a sandy account. Cumulative total = " + cum_total);
+                                alert("This is a sandy account! Cumlative total = " + cum_total + ".");
                         }
 
                         console.info("Cumulative Totals from transactions: "  + cum_total);

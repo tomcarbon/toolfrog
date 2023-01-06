@@ -30,7 +30,8 @@ class B1 extends React.Component {
             checked: false,
             address: '',
             SaveButtonDisabled: true,
-            transactionCount: 69
+            transactionCount: 69,
+            amountForBatch: 0           // the cumulative total of dogecoin in this selection of transactions
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
@@ -45,11 +46,23 @@ class B1 extends React.Component {
         this.setState({ checked });
     }
 
+    displayAndForceUpdate(file) {
+        if (file) {
+            this.setState({address: file.name.slice(0,34)})
+        }
+        this.setState({SaveButtonDisabled: false})
+        this.setState({transactionCount: result.length});
+        const cumTotal = result.reduce((a,b) => {return parseFloat(a)+parseFloat(b.value)},0).toFixed(8);
+        this.setState({amountForBatch:cumTotal});
+        this.forceUpdate();
+
+    }
     clearTransactions() {
         result = config.result_init;
         this.setState({SaveButtonDisabled: true})
         this.setState({address: ''})
         this.setState({transactionCount: 0});
+        this.setState({amountForBatch: 0});
         this.forceUpdate();
     }
 
@@ -64,10 +77,7 @@ class B1 extends React.Component {
                 reader.onload = readerEvent => {
                     result = JSON.parse(readerEvent.target.result)
                     if (result && result.length > 0) {
-                        this.setState({SaveButtonDisabled: false})
-                        this.setState({address: file.name.slice(0,34)});
-                        this.setState({transactionCount: result.length});
-                        this.forceUpdate();
+                        this.displayAndForceUpdate(file);
                     } else {
                         this.clearTransactions();
                         alert("Empty Transaction dataset.")
@@ -122,9 +132,8 @@ class B1 extends React.Component {
                     }
                     this.clearTransactions();
                 } else {
-                    this.setState({SaveButtonDisabled: false})
-                    this.setState({transactionCount: result.length});
-                    this.forceUpdate();
+                    // happy path
+                    this.displayAndForceUpdate(null);
                 }
             }
         }
@@ -138,6 +147,7 @@ class B1 extends React.Component {
                 <h2>Pull Transactions</h2>
 
                 <APISelector generica={this.props.generica} selectedAPI={this.props.selectedAPI} />
+                <div>Currently Selected API: <strong>{this.props.selectedAPI}</strong></div>
                 <br />
                 <form onSubmit={this.getUTxs}>
                     <label>
@@ -150,9 +160,8 @@ class B1 extends React.Component {
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.loadTransactionsFromFile()}>Load</HoverButton>
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.clearTransactions()}>Clear</HoverButton>
 
-                <div hidden={this.state.SaveButtonDisabled}>Address: <strong>{this.state.address.trim()}</strong></div>
-                <div hidden={this.state.SaveButtonDisabled}>Transaction Count: <strong>{this.state.transactionCount}</strong></div>
                 <br />
+                <div hidden={this.state.SaveButtonDisabled}>Transaction Count: <strong>{this.state.transactionCount}</strong></div>
                 <table className='basic-container rounded'>
                     <thead>
                     <tr>
@@ -177,6 +186,9 @@ class B1 extends React.Component {
                     }
                     </tbody>
                 </table>
+                <div hidden={this.state.SaveButtonDisabled}>Address: <strong>{this.state.address.trim()}</strong></div>
+                <div hidden={this.state.SaveButtonDisabled}>Total (for selected transactions): <strong> Ð {this.state.amountForBatch}</strong></div>
+                <br />
             </Container>
         );
     }

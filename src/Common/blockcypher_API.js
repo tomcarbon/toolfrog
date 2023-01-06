@@ -8,10 +8,6 @@ export default async function get_the_Blockcypher_transactions(address) {
                 let work_txs = [];
                 let cum_total = parseFloat("0.0");
                 const url_stg = "https://api.blockcypher.com/v1/doge/main/addrs/" + address + "?includeScript=true&unspentOnly=true";
-                console.info("url_stg = " + url_stg + ".");
-                /*
-                const data = await $.ajax ({ type: "GET", url: url_stg, dataType: "json" });
-                */
                 const result = await axios.get(url_stg);
                 const data = result.data;
                 console.log(data);
@@ -39,7 +35,7 @@ export default async function get_the_Blockcypher_transactions(address) {
                                 console.info( "blockcypher:TX(" + i + "): " + work_txs[i].txid + ", output_no: " + work_txs[i].output_no + ", value: " + work_txs[i].value);
                         }
 
-                        if (data.hasMore === true) {             // we can do more work here, put out warning for now.
+                        if (data.hasMore === true) {            
 //                                alert("data.hasMore = true in get_the_Blockcypher_transactions_blockcypher_update! This is a sandy account. Cumulative total = " + cum_total);
                                 alert("This is a sandy account! Cumlative total = " + cum_total + ".");
                         }

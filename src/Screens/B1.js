@@ -165,6 +165,7 @@ class B1 extends React.Component {
                 <table className='basic-container rounded'>
                     <thead>
                     <tr>
+                    <th>Idx</th>
                     <th>Hash</th>
                     <th>Output_No</th>
                     <th>Value</th>
@@ -176,6 +177,7 @@ class B1 extends React.Component {
                         result.map((value, key) => {
                         return (
                             <tr key={key}>
+                            <td>{key}</td>
                             <td>{value.txid}</td>
                             <td>{value.output_no}</td>
                             <td>{value.value}</td>

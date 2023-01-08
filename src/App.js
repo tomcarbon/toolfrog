@@ -10,6 +10,8 @@ import MenuBar from "./Components/MenuBar";
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import config from './Config/config';
+import commonUtils from './Common/commonUtils';
+import coinUtilsLegacy from './Common/coinUtilsLegacy';
 
 //import Row from "react-bootstrap/Row";
 //import Col from "react-bootstrap/Col";
@@ -27,6 +29,8 @@ class App extends React.Component {
 
   // generic App.js-level catch-all for many things.
   generica(a) {
+    commonUtils.mathProc("typ", "value");   // temporary, sample remove this
+    coinUtilsLegacy.coinProc("typ", "value");     // temporary, sample remove this
     // From Nav.js -- Navigation from the MenuBar:
     if (a.length === 2 && a.substring(1,2) === '1') {   // A1, B1, C1, etc
       this.setState({destination_page:a});

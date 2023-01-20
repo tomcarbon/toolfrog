@@ -5,7 +5,7 @@ toolfrog
 
 It's toolfrog. What if the public could easily manage their own transactions, transparently and open-sourcy-like
 
-#INSTALLATION AND RUN
+# INSTALLATION AND RUN
 
 This is a node/react program. Node, and a browser, are required to view it.
 

@@ -31,7 +31,8 @@ class B1 extends React.Component {
             address: '',
             SaveButtonDisabled: true,
             transactionCount: 69,
-            amountForBatch: 0           // the cumulative total of dogecoin in this selection of transactions
+            amountForBatch: 0,           // the cumulative total of dogecoin in this selection of transactions
+            selectedIndex: NaN
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
@@ -64,6 +65,14 @@ class B1 extends React.Component {
         this.setState({transactionCount: 0});
         this.setState({amountForBatch: 0});
         this.forceUpdate();
+    }
+
+    selectOneIndex(evt) {
+        if (isNaN(evt.target.value) || evt.target.value > result.length-1) {
+            this.setState({selectedIndex: "out of range"});       // TBD: do something with this index
+        } else {
+            this.setState({selectedIndex: parseInt(evt.target.value)});       // TBD: do something with this index
+        }
     }
 
     async loadTransactionsFromFile(a) {
@@ -161,7 +170,6 @@ class B1 extends React.Component {
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.clearTransactions()}>Clear</HoverButton>
 
                 <br />
-                <div hidden={this.state.SaveButtonDisabled}>Transaction Count: <strong>{this.state.transactionCount}</strong></div>
                 <table className='basic-container rounded'>
                     <thead>
                     <tr>
@@ -188,9 +196,18 @@ class B1 extends React.Component {
                     }
                     </tbody>
                 </table>
-                <div hidden={this.state.SaveButtonDisabled}>Address: <strong>{this.state.address.trim()}</strong></div>
-                <div hidden={this.state.SaveButtonDisabled}>Total (for selected transactions): <strong> Ð {this.state.amountForBatch}</strong></div>
-                <br />
+
+                <Container hidden={this.state.SaveButtonDisabled}>
+                    <div>Transaction Count: <strong>{this.state.transactionCount}</strong></div>
+                    <div>Address: <strong>{this.state.address.trim()}</strong></div>
+                    <div>Total (for selected transactions): <strong> Ð {this.state.amountForBatch}</strong></div>
+                    <br />
+
+                    <div>Enter one Index from above: </div>
+                    <input type="text" pattern="[0-9]" onInput={this.selectOneIndex.bind(this)}/>
+                    <div>Selected Index = {this.state.selectedIndex}</div>
+                </Container>
+
             </Container>
         );
     }

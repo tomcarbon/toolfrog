@@ -1,7 +1,11 @@
 
-// common coin functions
+// common coin functions, grow into this
 function coinProc(typ, val) {
-    console.log(`it's coinproc: typ = ${typ} and val = '${val}'`)
+    switch (typ) {
+        default:
+            console.log(`it's coinproc: typ = ${typ} and val = '${val}'`)
+            break;
+    }
 } 
 
 const coinUtilsLegacy = {

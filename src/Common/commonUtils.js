@@ -1,8 +1,12 @@
 import { save } from 'save-file'
 
-// common math functions
+// common math functions, grow into this
 function mathProc(typ, val) {
-    console.log(`it's mathproc: typ = ${typ} and val = '${val}'`)
+    switch (typ) {
+        default:
+            console.log(`it's mathproc: typ = ${typ} and val = '${val}'`)
+            break;
+    }
 } 
 
 async function saveFile(a,b) {  // The save button on B1.js, e.g

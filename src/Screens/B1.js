@@ -32,7 +32,7 @@ class B1 extends React.Component {
             SaveButtonDisabled: true,
             transactionCount: 69,
             amountForBatch: 0,           // the cumulative total of dogecoin in this selection of transactions
-            selectedIndex: NaN
+            selectedIndex: config.Out_Of_Range
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
@@ -67,13 +67,28 @@ class B1 extends React.Component {
         this.forceUpdate();
     }
 
+    // User updates the 'select one transaction' input box
     selectOneIndex(evt) {
-        if (isNaN(evt.target.value) || evt.target.value > result.length-1) {
-            this.setState({selectedIndex: "out of range"});       // TBD: do something with this index
+        if (isNaN(evt.target.value) || evt.target.value > result.length-1 || evt.target.value < 0) {
+            this.setState({selectedIndex: config.Out_Of_Range});
         } else {
             this.setState({selectedIndex: parseInt(evt.target.value)});       // TBD: do something with this index
         }
     }
+
+    // send this one selected transaction back to App.js
+    submitOneIndex() {
+        if (this.state.selectedIndex === config.Out_Of_Range) {
+            alert("The selected index is out of range! Please try again.");
+        }   else {
+            const output = {
+                id:             config.Individual_Transaction_01,
+                transaction:    result[this.state.selectedIndex]
+            }
+            this.props.generica(output);
+        }
+    }
+
 
     async loadTransactionsFromFile(a) {
         try {
@@ -203,11 +218,12 @@ class B1 extends React.Component {
                     <div>Total (for selected transactions): <strong> Ð {this.state.amountForBatch}</strong></div>
                     <br />
 
+                    <p>WIP v </p>
                     <div>Enter one Index from above: </div>
                     <input type="text" pattern="[0-9]" onInput={this.selectOneIndex.bind(this)}/>
                     <div>Selected Index = {this.state.selectedIndex}</div>
+                    <HoverButton className='official-general-buttonstyle' onClick={() => this.submitOneIndex()}>Go</HoverButton>
                 </Container>
-
             </Container>
         );
     }

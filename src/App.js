@@ -42,6 +42,13 @@ class App extends React.Component {
     else if (a === config.API_BlockCypher || a === config.API_TBD) {        // Selected API to use from B1->APISelector
       this.setState({selectedAPI:a})
     }
+    else if (a && a.id && a.id === config.Individual_Transaction_01) {
+      alert("Individual Transaction Selected. This is a WIP. See the console (via F12) for more information on this transaction.");
+      console.log(a);   // here is a single dogecoin transaction.
+    }
+    else if (a === "meat popsicle") {     // test landing spot.
+      alert("meat popsicle");
+    }
     else {             // otherwise, just display the message.
       console.log(a);
     }

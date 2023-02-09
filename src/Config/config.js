@@ -5,6 +5,8 @@ const config =
     Save_Button_Pressed: "The Saved Button was pressed.",
     Load_Button_Pressed: "The Load Button was pressed.",
     API_BlockCypher: "BlockCypher.io",
+    Individual_Transaction_01: "Individual Transaction 01",
+    Out_Of_Range:               "Out of Range.",
     API_TBD: "API TBD",
     result_init: [
                 {

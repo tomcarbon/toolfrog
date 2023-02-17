@@ -43,7 +43,7 @@ class App extends React.Component {
       this.setState({selectedAPI:a})
     }
     else if (a && a.id && a.id === config.Individual_Transaction_01) {
-      alert("Individual Transaction Selected. This is a WIP. See the console (via F12) for more information on this transaction.");
+//      alert("Individual Transaction Selected. This is a WIP. See the console (via F12) for more information on this transaction.");
       console.log(a);   // here is a single dogecoin transaction.
     }
     else if (a === "meat popsicle") {     // test landing spot.

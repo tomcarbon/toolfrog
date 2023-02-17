@@ -29,10 +29,14 @@ class B1 extends React.Component {
         this.state = {
             checked: false,
             address: '',
+            destAddress: '',
             SaveButtonDisabled: true,
+            SingleTransactionDisabled: true,
             transactionCount: 69,
             amountForBatch: 0,           // the cumulative total of dogecoin in this selection of transactions
-            selectedIndex: config.Out_Of_Range
+            selectedIndex: config.Out_Of_Range,
+            oneTransaction: {},
+            sendAmount: 0
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
@@ -43,8 +47,20 @@ class B1 extends React.Component {
         this.setState({address: event.target.value});
     }
 
+    handleDestAddressChange(event) {
+        this.setState({destAddress: event.target.value});
+    }
+
+    handleSendAmountChange(event) {
+        this.setState({sendAmount: event.target.value});
+    }
+
     handleTogChange(checked) {
         this.setState({ checked });
+    }
+
+    createSpendOne() {
+        alert("TBD");
     }
 
     displayAndForceUpdate(file) {
@@ -76,7 +92,7 @@ class B1 extends React.Component {
         }
     }
 
-    // send this one selected transaction back to App.js
+    // processing one transaction
     submitOneIndex() {
         if (this.state.selectedIndex === config.Out_Of_Range) {
             alert("The selected index is out of range! Please try again.");
@@ -85,7 +101,9 @@ class B1 extends React.Component {
                 id:             config.Individual_Transaction_01,
                 transaction:    result[this.state.selectedIndex]
             }
-            this.props.generica(output);
+            this.props.generica(output); // send this one selected transaction back to App.js
+            this.setState({oneTransaction: result[this.state.selectedIndex]})
+            this.setState({SingleTransactionDisabled: false})
         }
     }
 
@@ -223,6 +241,21 @@ class B1 extends React.Component {
                     <input type="text" pattern="[0-9]" onInput={this.selectOneIndex.bind(this)}/>
                     <div>Selected Index = {this.state.selectedIndex}</div>
                     <HoverButton className='official-general-buttonstyle' onClick={() => this.submitOneIndex()}>Go</HoverButton>
+                </Container>
+                <Container hidden={this.state.SingleTransactionDisabled}>
+                    <hr />
+                    <p>Single Transaction logic here:</p>
+                    <p>txid: <strong>{this.state.oneTransaction.txid}</strong></p>
+                    <p>value: <strong>{this.state.oneTransaction.value}</strong></p>
+                    <p>tbd</p>
+                    <form onSubmit={this.createSpendOne}>
+                        <label>
+                            Destination Dogecoin Address: <input type="text" value={this.state.destAddress} onChange={this.handleDestAddressChange} style={{width: "350px"}} />
+                        </label>
+                        <label>
+                            Amount To Send: <input type="text" value={this.state.sendAmount} onChange={this.handleSendAmountChange} style={{width: "150px"}} />
+                        </label>
+                    </form>
                 </Container>
             </Container>
         );

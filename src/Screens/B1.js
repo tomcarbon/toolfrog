@@ -36,10 +36,13 @@ class B1 extends React.Component {
             amountForBatch: 0,           // the cumulative total of dogecoin in this selection of transactions
             selectedIndex: config.Out_Of_Range,
             oneTransaction: {},
-            sendAmount: 0
+            sendAmount: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
+        this.handleDestAddressChange = this.handleDestAddressChange.bind(this);
+        this.handleSendAmountChange = this.handleSendAmountChange.bind(this);
+        this.createSpendOne = this.createSpendOne.bind(this);
         this.getUTxs = this.getUTxs.bind(this);
     }
 
@@ -59,8 +62,18 @@ class B1 extends React.Component {
         this.setState({ checked });
     }
 
-    createSpendOne() {
-        alert("TBD");
+    createSpendOne = (event) =>  {
+        event.preventDefault();
+        if (this.state.sendAmount <= 0 || parseFloat(this.state.sendAmount) > parseFloat(this.state.oneTransaction.value)) {
+            alert(`ERROR: Monetary Send value of ${this.state.sendAmount} is out of range for the selected transaction (${this.state.oneTransaction.value}).`);
+            return;
+        } else if (this.state.destAddress.length !== 34) {
+            alert("ERROR: The destination address is not 34 bytes in length.");
+        } else if (this.state.destAddress.slice(0,1) !== 'D' && this.state.destAddress.slice(0,1) !== 'A' && this.state.destAddress.slice(0,1) !== '9') {
+                alert("Destination Dogecoin Address must start with an A, 9, or D.");
+        } else {
+            alert("TBD: criteria met for send amount.");
+        }
     }
 
     displayAndForceUpdate(file) {
@@ -255,6 +268,7 @@ class B1 extends React.Component {
                         <label>
                             Amount To Send: <input type="text" value={this.state.sendAmount} onChange={this.handleSendAmountChange} style={{width: "150px"}} />
                         </label>
+                        <input className="official-general-buttonstyle" style={{margin:"1%"}} type="submit" value="Next" />
                     </form>
                 </Container>
             </Container>

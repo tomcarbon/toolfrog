@@ -82,7 +82,7 @@ class B1 extends React.Component {
             if (this.state.sendAmount === this.state.oneTransaction.value)      {       // subtract mining fee from total
                 this.setState({sendAmountGrandTotal: this.state.sendAmount})
             } else {        // adding mining fee to total
-                this.setState({sendAmountGrandTotal: (this.state.sendAmount + config.defaultMiningFee)})
+                this.setState({sendAmountGrandTotal: (parseFloat(this.state.sendAmount) + parseFloat(config.defaultMiningFee))})
             }
         }
     }

@@ -32,11 +32,13 @@ class B1 extends React.Component {
             destAddress: '',
             SaveButtonDisabled: true,
             SingleTransactionDisabled: true,
+            SingleTransactionPreviewDisabled: true,
             transactionCount: 69,
             amountForBatch: 0,           // the cumulative total of dogecoin in this selection of transactions
             selectedIndex: config.Out_Of_Range,
             oneTransaction: {},
-            sendAmount: ''
+            sendAmount: '',
+            sendAmountGrandTotal: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
@@ -62,6 +64,7 @@ class B1 extends React.Component {
         this.setState({ checked });
     }
 
+    // validate input fields
     createSpendOne = (event) =>  {
         event.preventDefault();
         if (this.state.sendAmount <= 0 || parseFloat(this.state.sendAmount) > parseFloat(this.state.oneTransaction.value)) {
@@ -69,10 +72,13 @@ class B1 extends React.Component {
             return;
         } else if (this.state.destAddress.length !== 34) {
             alert("ERROR: The destination address is not 34 bytes in length.");
+            return
         } else if (this.state.destAddress.slice(0,1) !== 'D' && this.state.destAddress.slice(0,1) !== 'A' && this.state.destAddress.slice(0,1) !== '9') {
-                alert("Destination Dogecoin Address must start with an A, 9, or D.");
+            alert("Destination Dogecoin Address must start with an A, 9, or D.");
+            return;
         } else {
-            alert("TBD: criteria met for send amount.");
+            // happy path
+            this.setState({SingleTransactionPreviewDisabled: false})
         }
     }
 
@@ -189,6 +195,11 @@ class B1 extends React.Component {
                 } else {
                     // happy path
                     this.displayAndForceUpdate(null);
+                    if (this.state.sendAmount === this.state.oneTransaction.value)      {       // subtract mining fee from total
+                        this.setState({sendAmountGrandTotal: this.state.sendAmount})
+                    } else {        // adding mining fee to total
+                        this.setState({sendAmountGrandTotal: this.state.sendAmount + config.defaultMiningFee})
+                    }
                 }
             }
         }
@@ -257,10 +268,10 @@ class B1 extends React.Component {
                 </Container>
                 <Container hidden={this.state.SingleTransactionDisabled}>
                     <hr />
-                    <p>Single Transaction logic here:</p>
+                    <p>Enter in the destination address and the amount you wish to send.</p>
+                    <h5>(the mining fee will be added to this amount, unless the total amount is indicated, then it will be subtracted)</h5>
                     <p>txid: <strong>{this.state.oneTransaction.txid}</strong></p>
                     <p>value: <strong>{this.state.oneTransaction.value}</strong></p>
-                    <p>tbd</p>
                     <form onSubmit={this.createSpendOne}>
                         <label>
                             Destination Dogecoin Address: <input type="text" value={this.state.destAddress} onChange={this.handleDestAddressChange} style={{width: "350px"}} />
@@ -270,6 +281,23 @@ class B1 extends React.Component {
                         </label>
                         <input className="official-general-buttonstyle" style={{margin:"1%"}} type="submit" value="Next" />
                     </form>
+                </Container>
+                <Container hidden={this.state.SingleTransactionPreviewDisabled}>
+                    <hr />
+                    <p>Prepare Block (TBD)</p>
+                    <button disabled={true}>Next</button>
+                    <hr />
+                    <p>Prepare Signature (TBD)</p>
+                    <button disabled={true}>Next</button>
+                    <hr />
+                    <p>Review and Broadcast</p>
+                    <p>From:      <strong>{this.state.address}</strong></p>
+                    <p>To:        <strong>{this.state.destAddress}</strong></p>
+                    <p>Amount:      <strong>Ð{this.state.sendAmount}</strong></p>
+                    <p>Mining Fee:  <strong>Ð{config.defaultMiningFee}</strong></p>
+                    <p><strong>Total to Send:  Ð{this.state.sendAmountGrandTotal}</strong></p>
+                    <button disabled={true}>Submit</button>
+                    <hr />
                 </Container>
             </Container>
         );

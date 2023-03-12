@@ -15,7 +15,8 @@ const config =
                     value: "none",
                     script_hex: "none"
                 }
-            ]
+            ],
+    defaultMiningFee: "0.01"
 }
 
 export default config;

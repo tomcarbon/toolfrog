@@ -79,6 +79,11 @@ class B1 extends React.Component {
         } else {
             // happy path
             this.setState({SingleTransactionPreviewDisabled: false})
+            if (this.state.sendAmount === this.state.oneTransaction.value)      {       // subtract mining fee from total
+                this.setState({sendAmountGrandTotal: this.state.sendAmount})
+            } else {        // adding mining fee to total
+                this.setState({sendAmountGrandTotal: (this.state.sendAmount + config.defaultMiningFee)})
+            }
         }
     }
 
@@ -195,11 +200,6 @@ class B1 extends React.Component {
                 } else {
                     // happy path
                     this.displayAndForceUpdate(null);
-                    if (this.state.sendAmount === this.state.oneTransaction.value)      {       // subtract mining fee from total
-                        this.setState({sendAmountGrandTotal: this.state.sendAmount})
-                    } else {        // adding mining fee to total
-                        this.setState({sendAmountGrandTotal: this.state.sendAmount + config.defaultMiningFee})
-                    }
                 }
             }
         }

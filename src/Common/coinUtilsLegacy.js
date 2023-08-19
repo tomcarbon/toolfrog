@@ -1,3 +1,4 @@
+/* ChatGPT Ref: ./src/Common/coinUtilsLegacy.js */
 
 // common coin functions, grow into this
 function coinProc(typ, val) {

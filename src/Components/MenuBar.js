@@ -1,3 +1,4 @@
+/* ChatGPT Ref: ./src/Components/MenuBar.js */
 import React from 'react';
 import styled from "styled-components";
 import Container from 'react-bootstrap/Container';

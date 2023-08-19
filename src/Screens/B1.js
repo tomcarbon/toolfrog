@@ -1,3 +1,4 @@
+/* ChatGPT Ref: ./src/Screens/B1.js */
 /* TRANSACTIONS - B1 */
 import React from 'react';
 import APISelector from '../Components/APISelector';

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Function to add identification comment to files
+add_identification_comment() {
+  file_path=$1
+  file_extension="${file_path##*.}"
+
+  # Check if file extension is either 'js' or 'css'
+  if [[ $file_extension == "js" || $file_extension == "css" ]]; then
+    # Check if the identification comment exists in the file
+    if ! grep -q "ChatGPT Ref:" "$file_path"; then
+      # Add identification comment to the file
+      echo "Adding identification comment to $file_path"
+      echo -e "/* ChatGPT Ref: $file_path */\n$(cat "$file_path")" >"$file_path"
+    else
+      # Remove existing header comments starting with "ChatGPT Ref:"
+      echo "Removing existing header comments from $file_path"
+      sed -i '/\/\* ChatGPT Ref: .* \*\//d' "$file_path"
+
+      # Add identification comment to the file
+      echo "Adding identification comment to $file_path"
+      echo -e "/* ChatGPT Ref: $file_path */\n$(cat "$file_path")" >"$file_path"
+    fi
+  fi
+}
+
+# Find all js and css files in the src directory (including subdirectories)
+file_list=$(find ./src -type f \( -name "*.js" -o -name "*.css" \))
+
+# Process each file and add identification comment if necessary
+for file_path in $file_list; do
+  add_identification_comment "$file_path"
+done
+
+# Create the output file
+output_file="output.js"
+echo -e "$file_list" >"$output_file"
+
+# Concatenate the files into a single output
+concatenated_output=$(cat $file_list)
+
+# Create the output text file
+output_text_file="output.txt"
+echo -e "Directory Tree:\n" >"$output_text_file"
+find ./src -type d -print | sed -e 's/[^-][^\/]*\//  |/g' -e 's/|\([^ ]\)/|-\1/' >>"$output_text_file"
+echo -e "\nConcatenated Output:\n\n$concatenated_output" >>"$output_text_file"
+
+echo "Identification comments added to files. Output files created: $output_file, $output_text_file"

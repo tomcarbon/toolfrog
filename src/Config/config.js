@@ -1,3 +1,4 @@
+/* ChatGPT Ref: ./src/Config/config.js */
 const config = 
 { 
     No_Unspent_Transactions: "No Unspent Transactions for this Address.",

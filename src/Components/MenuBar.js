@@ -1,4 +1,17 @@
 /* ChatGPT Ref: ./src/Components/MenuBar.js */
+/*
+
+20230820: hide the DBS and Withdraw menu items:
+                     // DBS:
+                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('D1')}>
+                        DBS 
+                     </HoverButton>
+                     // Withdrawl:
+                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('E1')}>     
+                        Withdraw
+                     </HoverButton>
+
+*/
 import React from 'react';
 import styled from "styled-components";
 import Container from 'react-bootstrap/Container';
@@ -35,14 +48,8 @@ class MenuBar extends React.Component {
                      <HoverButton className="official-menu-buttonstyle" onClick={() => generica('B1')}>
                         Transactions
                      </HoverButton>
-                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('E1')}>
-                        Withdraw
-                     </HoverButton>
                      <HoverButton className="official-menu-buttonstyle" onClick={() => generica('C1')}>
                        About
-                     </HoverButton>
-                     <HoverButton className="official-menu-buttonstyle" onClick={() => generica('D1')}>
-                        DBS 
                      </HoverButton>
                 <br />
              </Container>

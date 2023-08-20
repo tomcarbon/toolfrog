@@ -1,5 +1,8 @@
 /* ChatGPT Ref: ./src/Screens/B1.js */
 /* TRANSACTIONS - B1 */
+/*
+                <HoverButton className='official-general-buttonstyle' disabled={this.state.SaveButtonDisabled} onClick={() => this.saveTransactions()}>Save Selected</HoverButton>
+*/
 import React from 'react';
 import APISelector from '../Components/APISelector';
 import commonUtils  from '../Common/commonUtils';
@@ -223,7 +226,7 @@ class B1 extends React.Component {
                     <input disabled={!this.state.SaveButtonDisabled} className="official-general-buttonstyle" style={{margin:"1%"}} type="submit" value="Retrieve" />
                 </form>
 
-                <HoverButton className='official-general-buttonstyle' disabled={this.state.SaveButtonDisabled} onClick={() => this.saveTransactions()}>Save</HoverButton>
+                <HoverButton className='official-general-buttonstyle' disabled={this.state.SaveButtonDisabled} onClick={() => this.saveTransactions()}>Save All</HoverButton>
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.loadTransactionsFromFile()}>Load</HoverButton>
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.clearTransactions()}>Clear</HoverButton>
 
@@ -254,52 +257,6 @@ class B1 extends React.Component {
                     }
                     </tbody>
                 </table>
-
-                <Container hidden={this.state.SaveButtonDisabled}>
-                    <div>Transaction Count: <strong>{this.state.transactionCount}</strong></div>
-                    <div>Address: <strong>{this.state.address.trim()}</strong></div>
-                    <div>Total (for selected transactions): <strong> Ð {this.state.amountForBatch}</strong></div>
-                    <br />
-
-                    <p>WIP v </p>
-                    <div>Enter one Index from above: </div>
-                    <input type="text" pattern="[0-9]" onInput={this.selectOneIndex.bind(this)}/>
-                    <div>Selected Index = {this.state.selectedIndex}</div>
-                    <HoverButton className='official-general-buttonstyle' onClick={() => this.submitOneIndex()}>Go</HoverButton>
-                </Container>
-                <Container hidden={this.state.SingleTransactionDisabled}>
-                    <hr />
-                    <p>Enter in the destination address and the amount you wish to send.</p>
-                    <h5>(the mining fee will be added to this amount, unless the total amount is indicated, then it will be subtracted)</h5>
-                    <p>txid: <strong>{this.state.oneTransaction.txid}</strong></p>
-                    <p>value: <strong>{this.state.oneTransaction.value}</strong></p>
-                    <form onSubmit={this.createSpendOne}>
-                        <label>
-                            Destination Dogecoin Address: <input type="text" value={this.state.destAddress} onChange={this.handleDestAddressChange} style={{width: "350px"}} />
-                        </label>
-                        <label>
-                            Amount To Send: <input type="text" value={this.state.sendAmount} onChange={this.handleSendAmountChange} style={{width: "150px"}} />
-                        </label>
-                        <input className="official-general-buttonstyle" style={{margin:"1%"}} type="submit" value="Next" />
-                    </form>
-                </Container>
-                <Container hidden={this.state.SingleTransactionPreviewDisabled}>
-                    <hr />
-                    <p>Prepare Block (TBD)</p>
-                    <button disabled={true}>Next</button>
-                    <hr />
-                    <p>Prepare Signature (TBD)</p>
-                    <button disabled={true}>Next</button>
-                    <hr />
-                    <p>Review and Broadcast</p>
-                    <p>From:      <strong>{this.state.address}</strong></p>
-                    <p>To:        <strong>{this.state.destAddress}</strong></p>
-                    <p>Amount:      <strong>Ð{this.state.sendAmount}</strong></p>
-                    <p>Mining Fee:  <strong>Ð{config.defaultMiningFee}</strong></p>
-                    <p><strong>Total to Send:  Ð{this.state.sendAmountGrandTotal}</strong></p>
-                    <button disabled={true}>Submit</button>
-                    <hr />
-                </Container>
             </Container>
         );
     }

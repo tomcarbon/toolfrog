@@ -42,7 +42,8 @@ class B1 extends React.Component {
             selectedIndex: config.Out_Of_Range,
             oneTransaction: {},
             sendAmount: '',
-            sendAmountGrandTotal: ''
+            sendAmountGrandTotal: '',
+            selectedTransactions: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleTogChange = this.handleTogChange.bind(this);
@@ -50,6 +51,28 @@ class B1 extends React.Component {
         this.handleSendAmountChange = this.handleSendAmountChange.bind(this);
         this.createSpendOne = this.createSpendOne.bind(this);
         this.getUTxs = this.getUTxs.bind(this);
+    }
+
+    handleCheckboxChange(index) {
+        let selected = this.state.selectedTransactions;
+
+        if (selected.includes(index)) {
+            selected = selected.filter(i => i !== index);
+        } else {
+            selected.push(index);
+        }
+
+        this.setState({ selectedTransactions: selected });
+    }
+
+    saveSelectedTransactions() {
+        const selected = this.state.selectedTransactions.map(i => result[i]);
+        if (selected.length > 0) {
+            const fname = this.state.address.trim() + "_selected_transactions.json";
+            commonUtils.saveFile(JSON.stringify(selected), fname);
+        } else {
+            alert("No transactions selected!");
+        }
     }
 
     handleChange(event) {
@@ -227,6 +250,7 @@ class B1 extends React.Component {
                 </form>
 
                 <HoverButton className='official-general-buttonstyle' disabled={this.state.SaveButtonDisabled} onClick={() => this.saveTransactions()}>Save All</HoverButton>
+                <HoverButton className='official-general-buttonstyle' disabled={this.state.SaveButtonDisabled} onClick={() => this.saveSelectedTransactions()}>Save Selected</HoverButton>
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.loadTransactionsFromFile()}>Load</HoverButton>
                 <HoverButton className='official-general-buttonstyle' disabled={false} onClick={() => this.clearTransactions()}>Clear</HoverButton>
 
@@ -246,11 +270,12 @@ class B1 extends React.Component {
                         result.map((value, key) => {
                         return (
                             <tr key={key}>
-                            <td>{key}</td>
-                            <td>{value.txid}</td>
-                            <td>{value.output_no}</td>
-                            <td>{value.value}</td>
-                            <td>{value.script_hex}</td>
+                                <td><input type="checkbox" onChange={() => this.handleCheckboxChange(key)} /></td>
+                                <td>{key}</td>
+                                <td>{value.txid}</td>
+                                <td>{value.output_no}</td>
+                                <td>{value.value}</td>
+                                <td>{value.script_hex}</td>
                             </tr>
                         );
                         })

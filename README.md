@@ -15,7 +15,9 @@ This is a node/react program. Node, and a browser, are required to view it.
 
 # WIP. Capabilities so far:
 
-Load, Save, Retrieve and Display unspent transactions using the blockcypher.io API.
+Load, Save, Retrieve and Display unspent transactions using the blockcypher.io API. 
+
+Load transactions from either API or from JSON file. Select multiple transactions, and save selected transactions to json file.
 
 # NOTES
 
